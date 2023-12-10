@@ -1,0 +1,102 @@
+#include <iostream>
+using namespace std;
+int n=0;
+int x=0;
+int s;
+char opc;
+
+
+void subMenu1(){ // LINO
+	//int n=0;  // n de conta
+	int v=0; // valores das n contas
+	int total=0; // receber a soma das contas
+	int d; // recebe quanto vc tem para pagar as contas
+	
+	inicio:
+	
+	cout << "bem-vindo a calculadora de contas \n";
+	cout << "\n quantas contas voce deseja somar: ";
+	cin >> n;
+
+	if (n<0 ) {
+		cout <<"valor invalido \n";
+		return 0; 
+	} else	{
+		while ( v < n){	
+		cout << "informe o valor da divida: ";
+		cout << v + 1; 
+		cout<< ": ";
+		cin >> s;
+	
+	total+=s; // incremento
+	v++;	
+                    }
+
+            }
+	cout << "a soma das suas contas e: " << total <<"\n";
+		cout << "informe o valor do saldo para pagar as contas: ";
+	cin >> d;
+	x = d - total;
+	cout << "reslutado: "<< x <<"\n";
+	if (x < 0){
+		cout << "voce esta individado  \n";
+	}else if (x > 0){
+		
+		cout <<"vai sobrar dinheiro \n";
+	}else {
+		cout << "voce esta liso  \n";
+	        }
+	cout << "ainda deseja utilizar a calculadora s/n ?:  ";
+	cin >> opc;
+	 if(opc =='s' or opc=='S') {	
+	  goto inicio;
+	 
+	  }
+	 else {
+	 	cout <<"obrigado e ate mais";
+	 }
+	
+
+
+		return 0;
+}
+
+void subMenu2(){
+
+
+}
+
+
+
+
+void mainMenu(){
+
+    int op = 0;
+	do{
+        cout << "====== Menu Princial ======" << endl;
+		cout << "1 - Calculadora de Contas" << endl;
+		cout << "2 - Planilha de Contas" << endl;
+		cout << "3 - Encerrar " << endl;
+		cin >> op;
+		
+		switch(op){
+			case 1:
+				subMenu1();
+				break;
+			case 2:
+				subMenu2();
+				break;	
+			case 3:
+				cout << "Saindo do programa. Até logo!" << endl;
+				break;		
+			default:
+				cout << "invalido";
+				break;				
+		}
+	}while(op != 3);
+}
+
+
+int main (){
+    mainMenu();
+}
