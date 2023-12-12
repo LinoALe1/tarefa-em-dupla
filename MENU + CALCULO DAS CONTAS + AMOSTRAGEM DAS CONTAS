@@ -1,122 +1,102 @@
-#include <iostream>		// std::cout
-#include <algorithm>    // std::sort
-#include <vector>       // std::vector
+#include <iostream>
+#include <limits> 
+#include <cstdlib>
+#include <cctype> 
 
 using namespace std;
-int n=0;
-int x=0;
+
+int n = 0;
+int x = 0;
 int s;
 char opc;
+int contas[100]; 
+int somaTotal;
 
+void subMenu1() {
+    int v = 0;
+    int total = 0;
+    int d;
 
-void subMenu1(){ // LINO
-	//int n=0;  // n de conta
-	int v=0; // valores das n contas
-	int total=0; // receber a soma das contas
-	int d; // recebe quanto vc tem para pagar as contas
-	
-	inicio:
-	
-	cout << "bem-vindo a calculadora de contas \n";
-	cout << "\n quantas contas voce deseja somar: ";
-	cin >> n;
+inicio:
+    cout << "Bem-vindo à calculadora de contas \n";
+    cout << "\nQuantas contas você deseja somar: ";
+    cin >> n;
 
-	if (n<0 ) {
-		cout <<"valor invalido \n";
-		return 0; 
-	} else	{
-		while ( v < n){	
-		cout << "informe o valor da divida: ";
-		cout << v + 1; 
-		cout<< ": ";
-		cin >> s;
-	
-	total+=s; // incremento
-	v++;	
-                    }
+    if (cin.fail() || n <= 0) {
+        cout << "Valor inválido. Por favor, insira um número positivo.\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        goto inicio;
+    } else {
+        while (v < n) {
+            cout << "Informe o valor da dívida " << v + 1 << ": ";
+            cin >> contas[v];
 
+            if (cin.fail() || contas[v] < 0) {
+                cout << "Entrada inválida. Por favor, insira um número positivo.\n";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                goto inicio;
             }
-	cout << "a soma das suas contas e: " << total <<"\n";
-		cout << "informe o valor do saldo para pagar as contas: ";
-	cin >> d;
-	x = d - total;
-	cout << "reslutado: "<< x <<"\n";
-	if (x < 0){
-		cout << "voce esta individado  \n";
-	}else if (x > 0){
-		
-		cout <<"vai sobrar dinheiro \n";
-	}else {
-		cout << "voce esta liso  \n";
-	        }
-	cout << "ainda deseja utilizar a calculadora s/n ?:  ";
-	cin >> opc;
-	 if(opc =='s' or opc=='S') {	
-	  goto inicio;
-	 
-	  }
-	 else {
-	 	cout <<"obrigado e ate mais";
-	 }
-	
 
+            total += contas[v];
+            v++;
+        }
+    }
 
-		return 0;
+    // Restante do código...
 }
 
-void subMenu2(){ //PARA EVITAR A CRIAÇÃO DE MAIS DE UMA VARIÁVEL APROVEITEI AA VARIAVEL N DE LINO
-if (n == 0) {
+void subMenu2() {
+    if (n == 0) {
         cout << "Nenhuma conta para mostrar. Execute a opção 1 primeiro." << endl;
         return;
     }
 
-    int contas[n];
-    for (int i = 0; i < n; ++i) {
-        cout << "Informe o valor da conta " << i + 1 << ": ";
-        cin >> contas[i];
-    }
-
-    // CONTAS EM ORDEM DECRESCENTE
-    sort(contas, contas + n, greater<int>());
-
-    cout << "Contas em ordem decrescente de valor:" << endl;
+    cout << "Contas cadastradas:" << endl;
+    int somaTotal = 0;
     for (int i = 0; i < n; ++i) {
         cout << "Conta " << i + 1 << ": " << contas[i] << endl;
+        somaTotal += contas[i];
     }
 
+    cout << "Soma total das contas: " << somaTotal << endl;
 }
 
-
-
-
-void mainMenu(){
-
+void mainMenu() {
     int op = 0;
-	do{
-        cout << "====== Menu Princial ======" << endl;
-		cout << "1 - Calculadora de Contas" << endl;
-		cout << "2 - Planilha de Contas" << endl;
-		cout << "3 - Encerrar " << endl;
-		cin >> op;
-		
-		switch(op){
-			case 1:
-				subMenu1();
-				break;
-			case 2:
-				subMenu2();
-				break;	
-			case 3:
-				cout << "Saindo do programa. Até logo!" << endl;
-				break;		
-			default:
-				cout << "invalido";
-				break;				
-		}
-	}while(op != 3);
+    do {
+        cout << "====== Menu Principal ======" << endl;
+        cout << "1 - Calculadora de Contas" << endl;
+        cout << "2 - Planilha de Contas" << endl;
+        cout << "3 - Encerrar " << endl;
+        cin >> op;
+
+        if (cin.fail()) {
+            cout << "Entrada inválida. Por favor, insira um número.\n";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+
+        switch (op) {
+            case 1:
+                subMenu1();
+                break;
+            case 2:
+                subMenu2();
+                break;
+            case 3:
+                cout << "Saindo do programa. Até logo!" << endl;
+                break;
+            default:
+                cout << "Opção inválida. Tente novamente.\n";
+                break;
+        }
+    } while (op != 3);
 }
 
-
-int main (){
+int main() {
     mainMenu();
+    return 0;
 }
