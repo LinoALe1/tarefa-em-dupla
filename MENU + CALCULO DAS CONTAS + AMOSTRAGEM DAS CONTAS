@@ -1,4 +1,7 @@
-#include <iostream>
+#include <iostream>		// std::cout
+#include <algorithm>    // std::sort
+#include <vector>       // std::vector
+
 using namespace std;
 int n=0;
 int x=0;
